@@ -30,7 +30,19 @@ SRCS += $(NO-OS)/util/no_os_lf256fifo.c		\
 	$(NO-OS)/util/no_os_alloc.c		\
 	$(NO-OS)/util/no_os_mutex.c
 
-SRC_DIRS += $(NO-OS)/network
+# WiFi (ESP8266) stack over the no_os_net HAL (needs the AT parser).
+CFLAGS += -DNO_OS_NET
+
+SRCS += $(NO-OS)/network/wifi/at_parser.c	\
+	$(NO-OS)/network/wifi/wifi_net.c		\
+	$(DRIVERS)/api/no_os_net.c		\
+	$(DRIVERS)/api/no_os_socket.c
+INCS += $(NO-OS)/network/wifi/at_parser.h	\
+	$(NO-OS)/network/wifi/at_params.h	\
+	$(NO-OS)/network/wifi/wifi_net.h		\
+	$(INCLUDE)/no_os_net.h			\
+	$(INCLUDE)/no_os_socket.h
+NO_OS_INC_DIRS += $(NO-OS)/network/wifi
 
 DISABLE_SECURE_SOCKET=y
 
